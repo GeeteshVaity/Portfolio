@@ -6,7 +6,7 @@ import { skillSchema } from '@/lib/validations'
  * GET /api/skills
  * Fetch all skills
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     console.log('Fetching skills...')
     const skills = await prisma.skill.findMany({

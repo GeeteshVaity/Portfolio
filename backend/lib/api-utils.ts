@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 export class ApiError extends Error {
   constructor(
@@ -16,7 +16,7 @@ export class ApiError extends Error {
  */
 export function serializeData<T>(data: T): T {
   return JSON.parse(
-    JSON.stringify(data, (key, value) => {
+    JSON.stringify(data, (_key, value) => {
       if (value instanceof Date) {
         return value.toISOString()
       }
@@ -72,30 +72,4 @@ export function errorResponse(
     },
     { status: defaultStatusCode }
   )
-}
-
-export async function requireAuth(req: NextRequest) {
-  const session = await getServerSession()
-
-  if (!session?.user) {
-    throw new ApiError(401, 'Unauthorized', 'AUTH_REQUIRED')
-  }
-
-  return session
-}
-
-export async function requireAdmin(req: NextRequest) {
-  const session = await getServerSession()
-
-  if (!session?.user) {
-    throw new ApiError(401, 'Unauthorized', 'AUTH_REQUIRED')
-  }
-
-  // In a real app, check if user is admin in database
-  // For now, we'll check if email matches admin email
-  if (session.user.email !== process.env.ADMIN_EMAIL) {
-    throw new ApiError(403, 'Forbidden: Admin access required', 'ADMIN_REQUIRED')
-  }
-
-  return session
 }

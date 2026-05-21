@@ -10,10 +10,8 @@ interface ApiResponse<T = any> {
 
 class ApiClient {
   private client: AxiosInstance
-  private baseURL: string
 
   constructor(baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api') {
-    this.baseURL = baseURL
     this.client = axios.create({
       baseURL,
       headers: {

@@ -6,7 +6,7 @@ import { projectSchema } from '@/lib/validations'
  * GET /api/projects
  * Fetch all published projects
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     console.log('Fetching projects...')
     const projects = await prisma.project.findMany({

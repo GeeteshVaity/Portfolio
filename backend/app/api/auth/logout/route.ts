@@ -1,26 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../[...nextauth]/route'
+import { NextResponse } from 'next/server'
 
 /**
  * POST /api/auth/logout
  * Logout the current user
  */
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
-    const session = await getServerSession(authOptions)
-
-    if (!session?.user) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Not authenticated',
-        },
-        { status: 401 }
-      )
-    }
-
-    // NextAuth handles session destruction via the client
+    // For v5 beta compatibility, simplified logout
     return NextResponse.json(
       {
         success: true,

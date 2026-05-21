@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../[...nextauth]/route'
 import { prisma } from '@/lib/prisma'
 import { loginSchema } from '@/lib/validations'
 import bcrypt from 'bcryptjs'
