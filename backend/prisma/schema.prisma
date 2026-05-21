@@ -1,0 +1,143 @@
+// Portfolio Database Schema
+// MongoDB database for managing portfolio content
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+/// User model for authentication and admin management
+model User {
+  id        String     @id @default(cuid()) @map("_id")
+  email     String     @unique
+  /// Password hash (bcryptjs)
+  password  String
+  name      String?
+  /// Admin role indicator
+  role      String     @default("user")
+  isAdmin   Boolean    @default(false)
+  /// Account status
+  active    Boolean    @default(true)
+  
+  /// MFA fields
+  mfaEnabled          Boolean    @default(false)
+  /// TOTP secret (Time-based One-Time Password)
+  mfaSecret           String?
+  /// Backup codes for MFA recovery (encrypted)
+  mfaBackupCodes      String[]   @default([])
+  
+  /// Security fields
+  failedLoginAttempts Int        @default(0)
+  /// Account locked until this timestamp
+  lockedUntil         DateTime?
+  /// Last login IP address
+  lastLoginIP         String?
+  /// Last login timestamp
+  lastLoginTime       DateTime?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  /// Relations
+  projects  Project[]  @relation("UserProjects")
+  skills    Skill[]    @relation("UserSkills")
+  auditLogs AuditLog[] @relation("UserAuditLogs")
+  
+  /// Indexes for query optimization
+  @@index([isAdmin])
+  @@index([active])
+  @@index([lockedUntil])
+  @@map("users")
+}
+
+/// Audit log for tracking admin activities
+model AuditLog {
+  id        String   @id @default(cuid()) @map("_id")
+  /// User who performed the action
+  userId    String
+  user      User     @relation("UserAuditLogs", fields: [userId], references: [id], onDelete: Cascade)
+  /// Action performed (login, logout, create_project, etc.)
+  action    String
+  /// Resource affected (project_id, skill_id, etc.)
+  resource  String?
+  /// Client IP address
+  ipAddress String?
+  /// User agent / Browser info
+  userAgent String?
+  /// Result status
+  status    String   @default("success") // success or failure
+  /// Additional details
+  details   String?
+  timestamp DateTime @default(now())
+  
+  /// Indexes for query optimization
+  @@index([userId])
+  @@index([action])
+  @@index([timestamp])
+  @@map("auditLogs")
+}
+
+/// Project model for portfolio projects showcase
+model Project {
+  id          String     @id @default(cuid()) @map("_id")
+  title       String
+  description String
+  /// Project cover/thumbnail image URL
+  image       String?
+  /// Project demo or live link URL
+  link        String?
+  /// GitHub repository or additional links
+  githubLink  String?
+  /// Technology tags (React, TypeScript, etc.)
+  tags        String[]   @default([])
+  /// Display order in portfolio
+  order       Int        @default(0)
+  /// Published status (only published shown to public)
+  published   Boolean    @default(true)
+  /// Featured project (highlights on home page)
+  featured    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  /// Creator user reference
+  createdBy   String
+  user        User       @relation("UserProjects", fields: [createdBy], references: [id], onDelete: Cascade)
+  
+  /// Indexes for query optimization
+  @@index([createdBy])
+  @@index([published])
+  @@index([featured])
+  @@index([order])
+  @@index([updatedAt])
+  @@map("projects")
+}
+
+/// Skill model for technical skills categorization
+model Skill {
+  id        String     @id @default(cuid()) @map("_id")
+  /// Skill name (React, TypeScript, etc.)
+  name      String
+  /// Skill category (Frontend, Backend, Tools, Design, etc.)
+  category  String
+  /// Proficiency level
+  proficiency String   @default("intermediate")
+  /// Years of experience
+  years     Int        @default(1)
+  /// Display order in category
+  order     Int        @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  /// Creator user reference
+  createdBy String
+  user      User       @relation("UserSkills", fields: [createdBy], references: [id], onDelete: Cascade)
+  
+  /// Indexes for query optimization
+  @@index([createdBy])
+  @@index([category])
+  @@index([proficiency])
+  @@index([order])
+  @@map("skills")
+}

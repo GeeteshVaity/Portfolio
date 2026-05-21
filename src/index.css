@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply scroll-smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-on-surface font-body-md antialiased overflow-x-hidden;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+
+.sketch-border {
+  @apply border-2 border-[#2c2c2c] shadow-sketch;
+}
+
+.sketch-border-sm {
+  @apply border-2 border-[#2c2c2c] shadow-sketch-sm;
+}
+
+.sketch-border-lg {
+  @apply border-2 border-[#2c2c2c] shadow-sketch-lg;
+}
+
+.yellow-highlight {
+  background: linear-gradient(180deg, transparent 20%, #ffdf93 20%, #ffdf93 100%);
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  display: inline-block;
+  padding: 4px 6px;
+  line-height: 1.2;
+}
+
+.side-note-tilt {
+  @apply -rotate-2;
+}
+
+.interactive-hover {
+  @apply hover:-rotate-1 hover:scale-105 transition-all duration-200;
+}
+
+.button-press {
+  @apply active:translate-y-0.5 active:scale-95;
+}
+
+/* Smooth transitions */
+@layer components {
+  /* Removed unused animation classes - animations handled by Framer Motion and Radix UI */
+
+  .sketch-card {
+    @apply sketch-border rounded-[16px] bg-surface-bright p-6 hover:shadow-sketch-sm transition-all duration-300;
+  }
+
+  .sketch-button {
+    @apply sketch-border-sm rounded-[16px] font-h3 px-8 py-4 transition-all duration-200 button-press interactive-hover;
+  }
+
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20;
+  }
+}
