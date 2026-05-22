@@ -1,9 +1,19 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname),
+    }
+
+    return config
   },
   headers: async () => {
     return [
