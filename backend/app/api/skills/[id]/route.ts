@@ -1,25 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { skillUpdateSchema } from '@/lib/validations'
-
-/**
- * Helper function to check if user is admin
- */
-function isAuthorized(req: NextRequest): boolean {
-  // Check for bearer token
-  const authHeader = req.headers.get('authorization')
-  if (authHeader?.startsWith('Bearer ')) {
-    return true
-  }
-  
-  // Allow requests from same origin (frontend)
-  const origin = req.headers.get('origin') || req.headers.get('referer')
-  if (origin?.includes('localhost') || origin?.includes('127.0.0.1')) {
-    return true
-  }
-  
-  return false
-}
+import { verifyAdminRequest } from '@/lib/admin-auth'
+import { corsPreflight, withCors } from '@/lib/cors'
 
 /**
  * PUT /api/skills/[id]
@@ -30,43 +13,50 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    if (!isAuthorized(req)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Unauthorized',
-        },
-        { status: 401 }
+    if (!(await verifyAdminRequest(req))) {
+      return withCors(
+        req,
+        NextResponse.json(
+          {
+            success: false,
+            message: 'Unauthorized',
+          },
+          { status: 401 }
+        )
       )
     }
 
     const body = await req.json()
 
-    // Validate input
     const validation = skillUpdateSchema.safeParse(body)
     if (!validation.success) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Validation failed',
-          errors: validation.error.flatten(),
-        },
-        { status: 400 }
+      return withCors(
+        req,
+        NextResponse.json(
+          {
+            success: false,
+            message: 'Validation failed',
+            errors: validation.error.flatten(),
+          },
+          { status: 400 }
+        )
       )
     }
 
-    // Check if skill exists
     const skill = await prisma.skill.findUnique({
       where: { id: params.id },
     })
 
     if (!skill) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Skill not found',
-        },
-        { status: 404 }
+      return withCors(
+        req,
+        NextResponse.json(
+          {
+            success: false,
+            message: 'Skill not found',
+          },
+          { status: 404 }
+        )
       )
     }
 
@@ -75,24 +65,28 @@ export async function PUT(
       data: validation.data,
     })
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'Skill updated successfully',
-        data: updatedSkill,
-      },
-      { status: 200 }
+    return withCors(
+      req,
+      NextResponse.json(
+        {
+          success: true,
+          message: 'Skill updated successfully',
+          data: updatedSkill,
+        },
+        { status: 200 }
+      )
     )
   } catch (error) {
     console.error('Update skill error:', error)
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    return NextResponse.json(
-      {
-        success: false,
-        message: 'Failed to update skill',
-        error: errorMessage,
-      },
-      { status: 500 }
+    return withCors(
+      req,
+      NextResponse.json(
+        {
+          success: false,
+          message: 'Failed to update skill',
+        },
+        { status: 500 }
+      )
     )
   }
 }
@@ -106,28 +100,33 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    if (!isAuthorized(req)) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Unauthorized',
-        },
-        { status: 401 }
+    if (!(await verifyAdminRequest(req))) {
+      return withCors(
+        req,
+        NextResponse.json(
+          {
+            success: false,
+            message: 'Unauthorized',
+          },
+          { status: 401 }
+        )
       )
     }
 
-    // Check if skill exists
     const skill = await prisma.skill.findUnique({
       where: { id: params.id },
     })
 
     if (!skill) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Skill not found',
-        },
-        { status: 404 }
+      return withCors(
+        req,
+        NextResponse.json(
+          {
+            success: false,
+            message: 'Skill not found',
+          },
+          { status: 404 }
+        )
       )
     }
 
@@ -135,23 +134,31 @@ export async function DELETE(
       where: { id: params.id },
     })
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'Skill deleted successfully',
-      },
-      { status: 200 }
+    return withCors(
+      req,
+      NextResponse.json(
+        {
+          success: true,
+          message: 'Skill deleted successfully',
+        },
+        { status: 200 }
+      )
     )
   } catch (error) {
     console.error('Delete skill error:', error)
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    return NextResponse.json(
-      {
-        success: false,
-        message: 'Failed to delete skill',
-        error: errorMessage,
-      },
-      { status: 500 }
+    return withCors(
+      req,
+      NextResponse.json(
+        {
+          success: false,
+          message: 'Failed to delete skill',
+        },
+        { status: 500 }
+      )
     )
   }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return corsPreflight(req)
 }

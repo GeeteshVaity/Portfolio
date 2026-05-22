@@ -4,6 +4,8 @@ import { loginSchema } from '@/lib/validations'
 import bcrypt from 'bcryptjs'
 import { createRateLimiter, getClientIP } from '@/lib/rate-limiter'
 import { createIPWhitelist, getWhitelistedIPs } from '@/lib/ip-whitelist'
+import { createAdminToken } from '@/lib/admin-auth'
+import { corsPreflight } from '@/lib/cors'
 
 // Rate limiter: 5 attempts per 15 minutes per IP
 const loginLimiter = createRateLimiter({
@@ -190,6 +192,22 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    if (!user.isAdmin || !user.active) {
+      await logAuditEvent(
+        user.id,
+        'login_not_authorized',
+        clientIP,
+        userAgent,
+        'failure',
+        'User is not an active admin'
+      )
+
+      return NextResponse.json(
+        { success: false, message: 'Admin access required' },
+        { status: 403 }
+      )
+    }
+
     // Step 9: Login successful (no MFA)
     await logAuditEvent(
       user.id,
@@ -200,16 +218,24 @@ export async function POST(req: NextRequest) {
       'Password verified, no MFA'
     )
 
+    const token = createAdminToken({
+      sub: user.id,
+      email: user.email,
+    })
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      isAdmin: user.isAdmin,
+    }
+
     return NextResponse.json(
       {
         success: true,
         message: 'Login successful',
-        data: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          isAdmin: user.isAdmin,
-        },
+        token,
+        user: safeUser,
+        data: safeUser,
       },
       { status: 200 }
     )
@@ -231,6 +257,10 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     )
   }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return corsPreflight(req)
 }
 
 /**

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { verifyTOTP, verifyHashedBackupCode } from '@/lib/mfa-service'
 import { getClientIP } from '@/lib/rate-limiter'
+import { createAdminToken } from '@/lib/admin-auth'
+import { corsPreflight } from '@/lib/cors'
 
 /**
  * POST /api/auth/mfa/verify
@@ -39,6 +41,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { success: false, message: 'MFA not enabled for this account' },
         { status: 400 }
+      )
+    }
+
+    if (!user.isAdmin || !user.active) {
+      return NextResponse.json(
+        { success: false, message: 'Admin access required' },
+        { status: 403 }
       )
     }
 
@@ -92,16 +101,24 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const adminToken = createAdminToken({
+      sub: user.id,
+      email: user.email,
+    })
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      isAdmin: user.isAdmin,
+    }
+
     return NextResponse.json(
       {
         success: true,
         message: 'MFA verified successfully',
-        data: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          isAdmin: user.isAdmin,
-        },
+        token: adminToken,
+        user: safeUser,
+        data: safeUser,
       },
       { status: 200 }
     )
@@ -112,6 +129,10 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     )
   }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return corsPreflight(req)
 }
 
 /**
