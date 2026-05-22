@@ -23,7 +23,7 @@ export function AdminMFAVerify({ userId, onSuccess, onCancel }: AdminMFAVerifyPr
     try {
       const verificationToken = useBackupCode ? backupCode : token
       
-      const res = await fetch('/api/auth/mfa/verify', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || '/api'}/auth/mfa/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

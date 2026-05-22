@@ -22,7 +22,7 @@ export function AdminMFASetup({ onSuccess, onCancel }: AdminMFASetupProps) {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/auth/mfa/setup', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || '/api'}/auth/mfa/setup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -55,7 +55,7 @@ export function AdminMFASetup({ onSuccess, onCancel }: AdminMFASetupProps) {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/auth/mfa/setup', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || '/api'}/auth/mfa/setup`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ secret, token: verifyToken }),
