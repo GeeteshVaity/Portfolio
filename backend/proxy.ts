@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 
 import { corsPreflight, withCors } from '@/lib/cors'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const response = NextResponse.next()
 
   if (request.method === 'OPTIONS') {

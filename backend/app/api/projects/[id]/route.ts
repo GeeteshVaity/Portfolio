@@ -10,9 +10,11 @@ import { corsPreflight, withCors } from '@/lib/cors'
  */
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+
     if (!(await verifyAdminRequest(req))) {
       return withCors(
         req,
@@ -44,7 +46,7 @@ export async function PUT(
     }
 
     const project = await prisma.project.findUnique({
-      where: { id: params.id },
+      where: { id },
     })
 
     if (!project) {
@@ -61,7 +63,7 @@ export async function PUT(
     }
 
     const updatedProject = await prisma.project.update({
-      where: { id: params.id },
+      where: { id },
       data: validation.data,
     })
 
@@ -97,9 +99,11 @@ export async function PUT(
  */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
+
     if (!(await verifyAdminRequest(req))) {
       return withCors(
         req,
@@ -114,7 +118,7 @@ export async function DELETE(
     }
 
     const project = await prisma.project.findUnique({
-      where: { id: params.id },
+      where: { id },
     })
 
     if (!project) {
@@ -131,7 +135,7 @@ export async function DELETE(
     }
 
     await prisma.project.delete({
-      where: { id: params.id },
+      where: { id },
     })
 
     return withCors(
