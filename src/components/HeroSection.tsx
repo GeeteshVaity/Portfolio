@@ -17,10 +17,10 @@ export function HeroSection() {
   }
 
   return (
-    <main className="hero-stage relative isolate min-h-[620px] overflow-hidden px-4 pt-14 sm:min-h-[680px] sm:px-8 sm:pt-16 lg:min-h-[700px]">
-      <div className="relative mx-auto flex min-h-[560px] max-w-[1440px] items-center justify-center sm:min-h-[600px] lg:min-h-[620px]">
+    <main className="hero-stage relative isolate min-h-[700px] overflow-hidden px-4 pt-14 sm:min-h-[680px] sm:px-8 sm:pt-16 lg:min-h-[700px]">
+      <div className="relative mx-auto flex min-h-[640px] max-w-[1440px] items-center justify-center sm:min-h-[600px] lg:min-h-[620px]">
         <motion.div
-          className="pointer-events-none absolute inset-x-0 top-[3%] z-0 select-none text-center font-h1 text-[clamp(5.5rem,19vw,18rem)] font-black italic leading-[0.72] tracking-[-0.09em] text-[#d8d5ca]"
+          className="pointer-events-none absolute inset-x-0 top-[5%] z-0 select-none text-center font-h1 text-[clamp(4.5rem,24vw,18rem)] font-black italic leading-[0.72] tracking-[-0.09em] text-[#d8d5ca] sm:top-[3%] sm:text-[clamp(5.5rem,19vw,18rem)]"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -31,7 +31,7 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-[-1%] z-10 w-[min(100%,760px)] sm:bottom-[-5%] lg:w-[min(62vw,820px)]"
+          className="absolute bottom-[17%] z-10 w-[min(100%,560px)] sm:bottom-[-5%] sm:w-[min(100%,760px)] lg:w-[min(62vw,820px)]"
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.15, ease: 'easeOut' }}
@@ -44,29 +44,29 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-[16%] left-0 z-20 hidden max-w-[180px] sm:block lg:left-[4%]"
+          className="absolute bottom-[2%] left-0 z-20 w-[46%] max-w-[180px] sm:bottom-[16%] sm:block lg:left-[4%]"
           initial={{ opacity: 0, x: -18 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
         >
-          <p className="font-body-md text-sm italic leading-tight text-[#3d3b36]">
+          <p className="font-body-md text-xs italic leading-tight text-[#3d3b36] sm:text-sm">
             Hello, I&apos;m
             <br />
-            <strong className="text-base not-italic">Geetesh Vaity</strong>
+            <strong className="text-sm not-italic sm:text-base">Geetesh Vaity</strong>
           </p>
-          <p className="mt-2 text-[10px] leading-snug text-[#77736a]">
+          <p className="mt-1 text-[9px] leading-snug text-[#77736a] sm:mt-2 sm:text-[10px]">
             Android developer building thoughtful digital experiences.
           </p>
           <button
             type="button"
             onClick={downloadResume}
-            className="mt-4 rounded-full bg-[#2b2a27] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-transform hover:-translate-y-0.5"
+            className="mt-3 rounded-full bg-[#2b2a27] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-white transition-transform hover:-translate-y-0.5 sm:mt-4 sm:px-4 sm:text-[10px]"
           >
             Resume
           </button>
         </motion.div>
 
-        <div className="absolute bottom-[12%] right-0 z-20 hidden max-w-[150px] text-right text-[10px] leading-snug text-[#77736a] sm:block lg:right-[4%]">
+        <div className="absolute bottom-[2%] right-0 z-20 w-[42%] max-w-[150px] text-right text-[9px] leading-snug text-[#77736a] sm:bottom-[12%] sm:block sm:text-[10px] lg:right-[4%]">
           Focused on clean design, smooth user experiences, and scalable development.
         </div>
       </div>
