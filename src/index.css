@@ -12,8 +12,22 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
+body,
+#root {
+  background: #f8f6ef;
+}
+
 body {
-  @apply bg-background text-on-surface font-body-md antialiased overflow-x-hidden;
+  @apply bg-[#f8f6ef] text-on-surface font-body-md antialiased overflow-x-hidden;
+}
+
+.site-background {
+  background: #f8f6ef;
+}
+
+.hero-stage {
+  background: #f8f6ef;
 }
 
 .material-symbols-outlined {

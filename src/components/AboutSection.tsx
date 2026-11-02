@@ -40,7 +40,7 @@ const features = [
   {
     icon: 'psychology',
     title: 'Continuous Learner',
-    description: 'Actively exploring Android development, backend systems, UI/UX design, and AI technologies.',
+    description: 'Actively exploring Android development, frontend experiences, UI/UX design, and AI technologies.',
   },
 ]
 
@@ -84,7 +84,7 @@ export function AboutSection() {
           >
             <div className="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-stone-900 rounded-2xl p-6 shadow-sketch-lg overflow-hidden">
               <img
-                src="/assets/about-image.jpeg"
+                src="/assets/about-image.png"
                 alt="Geetesh Vaity Profile"
                 className="w-full h-auto rounded-xl border-2 border-stone-900 object-cover"
               />

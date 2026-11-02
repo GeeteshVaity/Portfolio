@@ -25,16 +25,16 @@ export function Header() {
   }
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sketch-sm' : 'bg-background'
-      )}
-    >
-      <div className="flex justify-between items-center w-full px-4 sm:px-8 py-4 max-w-screen-2xl mx-auto">
+    <header className="fixed left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
+      <div
+        className={cn(
+          'mx-auto flex w-full max-w-[760px] items-center justify-between rounded-full border border-[#dedbd2] px-4 py-2.5 transition-all duration-300 sm:px-5 sm:py-3',
+          isScrolled ? 'bg-[#f8f6ef]/95 shadow-[0_8px_30px_rgba(70,65,50,0.12)] backdrop-blur-md' : 'bg-[#f8f6ef]/90'
+        )}
+      >
         <div className="flex items-center gap-3">
           <motion.div
-            className="text-2xl sm:text-3xl font-h1 font-black italic -rotate-1 text-stone-900"
+            className="font-h1 text-lg font-black italic tracking-[-0.06em] text-stone-900 sm:text-xl"
             whileHover={{ scale: 1.05, rotate: -3 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -42,12 +42,12 @@ export function Header() {
           </motion.div>
 
           {/* Social Icons */}
-          <div className="flex items-center gap-2 ml-2">
+          <div className="ml-1 hidden items-center gap-1.5 sm:flex">
             <motion.a
               href="https://github.com/GeeteshVaity"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center w-8 h-8 rounded-lg border-2 border-stone-900 bg-white hover:bg-stone-100 transition-colors"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-900 bg-white transition-colors hover:bg-stone-100"
               whileHover={{ scale: 1.1, rotate: -5 }}
               whileTap={{ scale: 0.95 }}
               title="GitHub"
@@ -59,7 +59,7 @@ export function Header() {
               href="https://www.linkedin.com/in/geetesh-sanjay-vaity/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center w-8 h-8 rounded-lg border-2 border-stone-900 bg-white hover:bg-stone-100 transition-colors"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-stone-900 bg-white transition-colors hover:bg-stone-100"
               whileHover={{ scale: 1.1, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
               title="LinkedIn"
@@ -70,15 +70,15 @@ export function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 font-h1">
+        <nav className="hidden items-center gap-5 font-h1 md:flex">
           {navItems.map(item => (
             <motion.button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={cn(
-                'text-base font-medium transition-all duration-200 bg-none border-none cursor-pointer',
+                'cursor-pointer border-none bg-transparent text-xs font-medium transition-all duration-200 sm:text-sm',
                 activeSection === item.id
-                  ? 'text-orange-600 font-bold border-b-2 border-orange-500 pb-1'
+                  ? 'font-bold text-orange-600'
                   : 'text-stone-600 hover:text-orange-500'
               )}
               whileHover={{ y: -2 }}
@@ -89,10 +89,10 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           {/* Say Hello Button */}
           <motion.button
-            className="hidden sm:block bg-background border-2 border-stone-900 px-6 py-2 rounded-lg font-bold text-orange-600 shadow-sketch-sm"
+            className="hidden rounded-full bg-[#e89032] px-4 py-2 text-xs font-bold text-white transition-transform hover:-translate-y-0.5 sm:block"
             whileHover={{ y: -2, boxShadow: '0px 0px 20px rgba(255, 179, 71, 0.4)' }}
             whileTap={{ y: 0, scale: 0.95 }}
             onClick={() => scrollToSection('contact')}
@@ -102,7 +102,7 @@ export function Header() {
 
           {/* Mobile Menu Toggle */}
           <motion.button
-            className="md:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5"
+            className="flex h-8 w-8 flex-col items-center justify-center gap-1.5 md:hidden"
             onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -128,7 +128,7 @@ export function Header() {
 
       {/* Mobile Menu */}
       <motion.nav
-        className="md:hidden bg-white border-t-2 border-stone-200"
+        className="mt-2 overflow-hidden rounded-3xl border border-[#dedbd2] bg-[#f8f6ef] shadow-lg md:hidden"
         initial={{ height: 0, opacity: 0 }}
         animate={
           isMobileMenuOpen
@@ -200,5 +200,4 @@ export function Header() {
     </header>
   )
 }
-
 

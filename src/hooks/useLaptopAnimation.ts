@@ -57,12 +57,13 @@ export function useLaptopAnimation({
     stateRef.current.animationId = requestAnimationFrame(tick)
     
     // Cleanup on unmount
+    const animationState = stateRef.current
     return () => {
-      if (stateRef.current.animationId !== null) {
-        cancelAnimationFrame(stateRef.current.animationId)
+      if (animationState.animationId !== null) {
+        cancelAnimationFrame(animationState.animationId)
       }
     }
-  }, [])
+  }, [totalFrames])
 
   // Handle scroll for reverse animation
   useEffect(() => {

@@ -1,25 +1,19 @@
 import { motion } from 'framer-motion'
 import { usePortfolioStore } from '@/store/usePortfolioStore'
-import { ErrorAlert, EmptyState, LoadingSkeleton } from '@/components/ErrorStates'
-import { useRealTimeUpdates } from '@/hooks/useRealTimeUpdates'
 import { useRef, useState, useEffect, useCallback } from 'react'
 
 /**
  * Projects Section Component
- * Displays all published projects with real-time updates from API
- * Handles loading, error states, and empty states gracefully
+ * Displays the projects defined in the local portfolio content.
  */
 export function ProjectsSection() {
-  const { projects, loading, errors, clearError } = usePortfolioStore()
+  const { projects } = usePortfolioStore()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
   const isAnimatingRef = useRef(false)
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>()
   
-  // Enable real-time polling for projects (30 second intervals)
-  useRealTimeUpdates(true, 30000)
-
   const checkScroll = useCallback(() => {
     if (scrollContainerRef.current && !isAnimatingRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
@@ -88,51 +82,7 @@ export function ProjectsSection() {
     }
   }, [checkScroll])
 
-  // Loading State
-  if (loading.projects) {
-    return (
-      <section id="work" className="max-w-screen-xl mx-auto px-4 sm:px-8 md:px-xl py-lg md:py-xl">
-        <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Things I <span className="yellow-highlight">Built</span>
-        </h2>
-        <LoadingSkeleton count={3} height="h-72" className="grid grid-cols-1 md:grid-cols-2 gap-md" />
-      </section>
-    )
-  }
-
-  // Error State
-  if (errors.projects) {
-    return (
-      <section id="work" className="max-w-screen-xl mx-auto px-4 sm:px-8 md:px-xl py-lg md:py-xl">
-        <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Things I <span className="yellow-highlight">Built</span>
-        </h2>
-        <ErrorAlert
-          message={errors.projects}
-          title="Failed to Load Projects"
-          onClose={() => clearError('projects')}
-        />
-      </section>
-    )
-  }
-
-  // Empty State
-  if (!projects || projects.length === 0) {
-    return (
-      <section id="work" className="max-w-screen-xl mx-auto px-4 sm:px-8 md:px-xl py-lg md:py-xl">
-        <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Things I <span className="yellow-highlight">Built</span>
-        </h2>
-        <EmptyState
-          title="No projects yet"
-          description="Projects will appear here once they're added."
-          icon="📁"
-        />
-      </section>
-    )
-  }
-
-  // Filter published projects and sort by order
+  // Filter local content and sort by order
   const displayProjects = projects
     .filter((p) => p.published)
     .sort((a, b) => a.order - b.order)

@@ -1,62 +1,12 @@
 import { motion } from 'framer-motion'
 import { usePortfolioStore } from '@/store/usePortfolioStore'
-import { ErrorAlert, EmptyState, LoadingSkeleton } from '@/components/ErrorStates'
-import { useRealTimeUpdates } from '@/hooks/useRealTimeUpdates'
 
 /**
  * Skills Section Component
- * Displays all skills grouped by category with real-time updates from API
- * Handles loading, error states, and empty states gracefully
+ * Displays skills grouped by category from local portfolio content.
  */
 export function SkillsSection() {
-  const { skills, loading, errors, clearError } = usePortfolioStore()
-  
-  // Enable real-time polling for skills (30 second intervals)
-  useRealTimeUpdates(true, 30000)
-
-  // Loading State
-  if (loading.skills) {
-    return (
-      <section id="skills" className="max-w-screen-xl mx-auto px-4 sm:px-8 md:px-xl py-lg md:py-xl">
-        <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Skills &amp; <span className="yellow-highlight">Expertise</span>
-        </h2>
-        <LoadingSkeleton count={4} height="h-40" className="grid grid-cols-1 md:grid-cols-2 gap-lg" />
-      </section>
-    )
-  }
-
-  // Error State
-  if (errors.skills) {
-    return (
-      <section id="skills" className="max-w-screen-xl mx-auto px-4 sm:px-8 md:px-xl py-lg md:py-xl">
-        <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Skills &amp; <span className="yellow-highlight">Expertise</span>
-        </h2>
-        <ErrorAlert
-          message={errors.skills}
-          title="Failed to Load Skills"
-          onClose={() => clearError('skills')}
-        />
-      </section>
-    )
-  }
-
-  // Empty State
-  if (!skills || skills.length === 0) {
-    return (
-      <section id="skills" className="max-w-screen-xl mx-auto px-4 sm:px-8 md:px-xl py-lg md:py-xl">
-        <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Skills &amp; <span className="yellow-highlight">Expertise</span>
-        </h2>
-        <EmptyState
-          title="No skills added yet"
-          description="Skills will appear here once they're added."
-          icon="⚙️"
-        />
-      </section>
-    )
-  }
+  const { skills } = usePortfolioStore()
 
   // Group skills by category
   const skillsByCategory = skills.reduce(
