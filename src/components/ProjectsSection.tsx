@@ -112,7 +112,7 @@ export function ProjectsSection() {
         viewport={{ once: true }}
       >
         <h2 className="font-h2 text-h2 text-on-surface mb-2">
-          Things I <span className="yellow-highlight">Built</span>
+          My <span className="yellow-highlight">Projects</span>
         </h2>
         <p className="font-body-lg text-body-lg text-on-surface-variant mb-lg max-w-2xl">
           A collection of projects that showcase my passion for building beautiful, functional, and scalable web applications.

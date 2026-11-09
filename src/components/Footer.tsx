@@ -21,7 +21,7 @@ export function Footer() {
             Geetesh
           </div>
           <p className="font-label-hand text-xs uppercase tracking-widest text-stone-500">
-            © {currentYear} Designed and developed by Geetesh using modern web technologies.
+            © {currentYear} Designed and developed by Geetesh Vaity.
           </p>
         </motion.div>
 
@@ -32,11 +32,10 @@ export function Footer() {
           transition={{ duration: 0.5, delay: 0.1 }}
           viewport={{ once: true }}
         >
-          {['LeetCode', 'GitHub', 'Dribbble'].map(link => {
+          {['LeetCode', 'GitHub'].map(link => {
             const socialLinks: Record<string, string | undefined> = {
               LeetCode: import.meta.env.VITE_LEETCODE_URL,
               GitHub: import.meta.env.VITE_GITHUB_URL,
-              Dribbble: import.meta.env.VITE_DRIBBBLE_URL
             }
             
             return (

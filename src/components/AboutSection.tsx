@@ -59,7 +59,7 @@ export function AboutSection() {
           About <span className="yellow-highlight">Me</span>
         </h2>
         <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-          An IT student passionate about building modern digital experiences through clean code, beautiful design, and innovative thinking.
+          An IT student passionate about building modern digital experiences through clean code, beautiful design.
         </p>
       </motion.div>
 
@@ -99,12 +99,12 @@ export function AboutSection() {
         <motion.div variants={itemVariants} className="space-y-6 md:order-last">
           <div className="space-y-4">
             <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-              I'm an Information Technology student passionate about building modern digital experiences through development, design, and creativity. I enjoy creating applications that combine functionality with visually engaging interfaces and smooth user interactions.
-            </p>
+             I'm a B.Tech Information Technology student and an aspiring Software Developer who enjoys turning ideas into practical, well-built applications. I work across backend and mobile development, with experience in Java, Spring Boot, REST APIs, PostgreSQL, Flutter, and Dart. From designing backend systems to building user-friendly mobile experiences, I enjoy understanding how things work behind the scenes just as much as making them look good on the screen.
+             </p>
 
             <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-              My interests include Android development, full-stack web development, UI/UX design, and experimenting with AI-powered applications. I'm constantly exploring new technologies and improving my skills by building real-world projects and interactive experiences.
-            </p>
+              I believe in learning by building, experimenting, breaking things (occasionally on purpose), and figuring out how to make them better. I'm always curious about new technologies, enjoy solving problems, and love taking on challenges that push me beyond what I already know. Basically, I'm a developer who likes asking "What if we built this?" and then actually trying to build it.
+              </p>
             
             {/*<p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
               Beyond coding, I enjoy sketching, painting, video editing, solving Rubik's cubes, and finding inspiration from movies, games, and modern digital products. I believe great applications are not just functional, but also intuitive, meaningful, and enjoyable to use.

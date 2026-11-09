@@ -60,16 +60,38 @@ const projects: Project[] = [
 ]
 
 const skills: Skill[] = [
+  // Languages
   { id: 'java', name: 'Java', category: 'Languages', proficiency: 'advanced', years: 3, order: 1 },
   { id: 'kotlin', name: 'Kotlin', category: 'Languages', proficiency: 'advanced', years: 2, order: 2 },
-  { id: 'python', name: 'Python', category: 'Languages', proficiency: 'intermediate', years: 2, order: 3 },
-  { id: 'react', name: 'React', category: 'Frontend', proficiency: 'intermediate', years: 2, order: 1 },
-  { id: 'typescript', name: 'TypeScript', category: 'Frontend', proficiency: 'advanced', years: 3, order: 2 },
-  { id: 'tailwind', name: 'Tailwind CSS', category: 'Frontend', proficiency: 'advanced', years: 2, order: 3 },
+  { id: 'dart', name: 'Dart', category: 'Languages', proficiency: 'intermediate', years: 1, order: 3 },
+  { id: 'python', name: 'Python', category: 'Languages', proficiency: 'intermediate', years: 1, order: 4 },
+  { id: 'sql', name: 'SQL', category: 'Languages', proficiency: 'intermediate', years: 2, order: 5 },
+
+  // Tools
+  { id: 'git', name: 'Git', category: 'Tools', proficiency: 'intermediate', years: 2, order: 1 },
+  { id: 'github', name: 'GitHub', category: 'Tools', proficiency: 'intermediate', years: 2, order: 2 },
+  { id: 'android-studio', name: 'Android Studio', category: 'Tools', proficiency: 'advanced', years: 3, order: 3 },
+  { id: 'intellij', name: 'IntelliJ IDEA', category: 'Tools', proficiency: 'intermediate', years: 2, order: 4 },
+  { id: 'vscode', name: 'VS Code', category: 'Tools', proficiency: 'advanced', years: 2, order: 5 },
+  { id: 'aws', name: 'AWS', category: 'Tools', proficiency: 'intermediate', years: 1, order: 6 },
+  { id: 'firebase', name: 'Firebase', category: 'Tools', proficiency: 'intermediate', years: 2, order: 7 },
+  { id: 'mysql', name: 'MySQL', category: 'Tools', proficiency: 'intermediate', years: 2, order: 8 },
+  { id: 'postgresql', name: 'PostgreSQL', category: 'Tools', proficiency: 'intermediate', years: 2, order: 9 },
+
+  // Mobile
   { id: 'android', name: 'Android Development', category: 'Mobile', proficiency: 'advanced', years: 3, order: 1 },
-  { id: 'firebase', name: 'Firebase', category: 'Tools', proficiency: 'intermediate', years: 2, order: 1 },
-  { id: 'mysql', name: 'MySQL', category: 'Tools', proficiency: 'intermediate', years: 2, order: 2 },
-]
+  { id: 'flutter', name: 'Flutter', category: 'Mobile', proficiency: 'intermediate', years: 1, order: 2 },
+  { id: 'jetpack-compose', name: 'Jetpack Compose', category: 'Mobile', proficiency: 'intermediate', years: 1, order: 3 },
+  { id: 'room', name: 'Room Database', category: 'Mobile', proficiency: 'intermediate', years: 1, order: 4 },
+  { id: 'sqlite', name: 'SQLite', category: 'Mobile', proficiency: 'intermediate', years: 1, order: 5 },
+  { id: 'datastore', name: 'DataStore', category: 'Mobile', proficiency: 'beginner', years: 1, order: 6 },
+
+  // Backend
+  { id: 'springboot', name: 'Spring Boot', category: 'Backend', proficiency: 'intermediate', years: 2, order: 1 },
+  { id: 'rest-api', name: 'REST APIs', category: 'Backend', proficiency: 'intermediate', years: 2, order: 2 },
+  { id: 'jpa', name: 'JPA', category: 'Backend', proficiency: 'intermediate', years: 1, order: 3 },
+  { id: 'java-backend', name: 'Java Backend Development', category: 'Backend', proficiency: 'intermediate', years: 2, order: 4 },
+];
 
 interface PortfolioStore {
   isDarkMode: boolean

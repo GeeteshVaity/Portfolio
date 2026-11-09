@@ -49,13 +49,13 @@ export function HeroSection() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
         >
-          <p className="font-body-md text-xs italic leading-tight text-[#3d3b36] sm:text-sm">
+          <p className="font-body-md text-xs italic leading-tight text-[#3d3b36] sm:text-[20px]">
             Hello, I&apos;m
             <br />
-            <strong className="text-sm not-italic sm:text-base">Geetesh Vaity</strong>
+            <strong className="text-sm not-italic sm:text-[26px]">Geetesh Vaity</strong>
           </p>
-          <p className="mt-1 text-[9px] leading-snug text-[#77736a] sm:mt-2 sm:text-[10px]">
-            Android developer building thoughtful digital experiences.
+          <p className="mt-1 text-[9px] leading-snug text-[#77736a] sm:mt-2 sm:text-[14px]">
+            Mobile App & Backend developer.
           </p>
           <button
             type="button"
@@ -66,7 +66,7 @@ export function HeroSection() {
           </button>
         </motion.div>
 
-        <div className="absolute bottom-[2%] right-0 z-20 w-[42%] max-w-[150px] text-right text-[9px] leading-snug text-[#77736a] sm:bottom-[12%] sm:block sm:text-[10px] lg:right-[4%]">
+        <div className="absolute bottom-[2%] right-0 z-20 w-[42%] max-w-[220px] text-right text-[11px] leading-relaxed text-[#5f5b52] sm:bottom-[12%] sm:text-[13px] lg:right-[4%] lg:text-[14px]">
           Focused on clean design, smooth user experiences, and scalable development.
         </div>
       </div>
